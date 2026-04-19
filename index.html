@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>DSA Cohort – Chirag Goyal</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Bebas+Neue&family=DM+Sans:wght@400;600&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+background: #060a06;
+display: flex;
+align-items: center;
+justify-content: center;
+min-height: 100vh;
+font-family: ‘Share Tech Mono’, monospace;
+}
+
+.poster {
+width: 520px;
+background: #070d07;
+border: 1.5px solid #1a2e1a;
+position: relative;
+overflow: hidden;
+animation: fadeIn 0.8s ease both;
+}
+
+@keyframes fadeIn {
+from { opacity: 0; transform: translateY(16px); }
+to { opacity: 1; transform: translateY(0); }
+}
+
+/* Grid background */
+.poster::before {
+content: ‘’;
+position: absolute;
+inset: 0;
+background-image:
+linear-gradient(rgba(0,255,65,0.04) 1px, transparent 1px),
+linear-gradient(90deg, rgba(0,255,65,0.04) 1px, transparent 1px);
+background-size: 28px 28px;
+z-index: 0;
+}
+
+/* Top glow */
+.poster::after {
+content: ‘’;
+position: absolute;
+top: -80px;
+left: 50%;
+transform: translateX(-50%);
+width: 340px;
+height: 180px;
+background: radial-gradient(ellipse, rgba(0,255,65,0.13) 0%, transparent 70%);
+z-index: 0;
+pointer-events: none;
+}
+
+.inner {
+position: relative;
+z-index: 1;
+padding: 36px 36px 32px;
+}
+
+/* Top bar */
+.topbar {
+display: flex;
+align-items: center;
+justify-content: space-between;
+margin-bottom: 28px;
+animation: fadeIn 0.6s 0.1s ease both;
+}
+
+.terminal-tag {
+font-family: ‘Share Tech Mono’, monospace;
+font-size: 10px;
+color: #00ff41;
+letter-spacing: 0.15em;
+background: rgba(0,255,65,0.07);
+border: 1px solid rgba(0,255,65,0.2);
+padding: 4px 10px;
+border-radius: 2px;
+}
+
+.dots {
+display: flex;
+gap: 6px;
+}
+.dot {
+width: 8px; height: 8px;
+border-radius: 50%;
+}
+.dot.r { background: #ff5f57; }
+.dot.y { background: #febc2e; }
+.dot.g { background: #28c840; }
+
+/* Eyebrow */
+.eyebrow {
+font-size: 10px;
+color: #00ff41;
+letter-spacing: 0.25em;
+margin-bottom: 10px;
+opacity: 0.8;
+animation: fadeIn 0.6s 0.2s ease both;
+}
+
+/* Main title */
+.title {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 72px;
+line-height: 0.92;
+color: #fff;
+letter-spacing: 0.02em;
+margin-bottom: 6px;
+animation: fadeIn 0.6s 0.25s ease both;
+}
+
+.title span {
+color: #00ff41;
+text-shadow: 0 0 30px rgba(0,255,65,0.5);
+}
+
+.subtitle {
+font-family: ‘Share Tech Mono’, monospace;
+font-size: 11px;
+color: #4a7a4a;
+letter-spacing: 0.15em;
+margin-bottom: 28px;
+animation: fadeIn 0.6s 0.3s ease both;
+}
+
+/* Divider */
+.divider {
+height: 1px;
+background: linear-gradient(90deg, #00ff41 0%, rgba(0,255,65,0.1) 100%);
+margin-bottom: 24px;
+animation: expandWidth 0.8s 0.4s ease both;
+transform-origin: left;
+}
+
+@keyframes expandWidth {
+from { transform: scaleX(0); opacity: 0; }
+to { transform: scaleX(1); opacity: 1; }
+}
+
+/* What section */
+.section-label {
+font-size: 9px;
+color: #00ff41;
+letter-spacing: 0.3em;
+margin-bottom: 12px;
+opacity: 0.6;
+}
+
+.points {
+display: flex;
+flex-direction: column;
+gap: 10px;
+margin-bottom: 26px;
+animation: fadeIn 0.6s 0.45s ease both;
+}
+
+.point {
+display: flex;
+align-items: flex-start;
+gap: 12px;
+}
+
+.point-icon {
+color: #00ff41;
+font-size: 12px;
+margin-top: 1px;
+flex-shrink: 0;
+opacity: 0.9;
+}
+
+.point-text {
+font-family: ‘DM Sans’, sans-serif;
+font-size: 13px;
+color: #c8d8c8;
+line-height: 1.5;
+font-weight: 400;
+}
+
+.point-text strong {
+color: #fff;
+font-weight: 600;
+}
+
+/* Schedule block */
+.schedule {
+background: rgba(0,255,65,0.04);
+border: 1px solid rgba(0,255,65,0.12);
+border-radius: 4px;
+padding: 16px 18px;
+margin-bottom: 24px;
+animation: fadeIn 0.6s 0.5s ease both;
+}
+
+.schedule-row {
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 6px 0;
+border-bottom: 1px solid rgba(0,255,65,0.06);
+}
+.schedule-row:last-child { border-bottom: none; }
+
+.schedule-label {
+font-size: 11px;
+color: #4a7a4a;
+letter-spacing: 0.05em;
+}
+
+.schedule-value {
+font-size: 11px;
+color: #c8d8c8;
+text-align: right;
+}
+
+.schedule-value .highlight {
+color: #00ff41;
+font-weight: 700;
+}
+
+/* Warning */
+.warning {
+border-left: 3px solid #ff5f57;
+padding: 10px 14px;
+margin-bottom: 24px;
+background: rgba(255,95,87,0.05);
+animation: fadeIn 0.6s 0.55s ease both;
+}
+
+.warning-text {
+font-size: 11px;
+color: #ff8a85;
+line-height: 1.6;
+letter-spacing: 0.02em;
+}
+
+/* CTA */
+.cta {
+background: #00ff41;
+padding: 14px 20px;
+display: flex;
+align-items: center;
+justify-content: space-between;
+border-radius: 3px;
+margin-bottom: 20px;
+animation: fadeIn 0.6s 0.6s ease both;
+cursor: pointer;
+transition: background 0.2s;
+}
+.cta:hover { background: #00e639; }
+
+.cta-left { }
+.cta-label {
+font-size: 9px;
+color: #005515;
+letter-spacing: 0.2em;
+margin-bottom: 2px;
+}
+.cta-text {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 22px;
+color: #000;
+letter-spacing: 0.05em;
+}
+
+.cta-arrow {
+font-size: 22px;
+color: #000;
+font-family: ‘Bebas Neue’, sans-serif;
+}
+
+/* Footer */
+.footer {
+display: flex;
+align-items: center;
+justify-content: space-between;
+animation: fadeIn 0.6s 0.65s ease both;
+}
+
+.organizer {
+display: flex;
+flex-direction: column;
+}
+
+.org-label {
+font-size: 9px;
+color: #2a4a2a;
+letter-spacing: 0.2em;
+margin-bottom: 3px;
+}
+
+.org-name {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 20px;
+color: #fff;
+letter-spacing: 0.08em;
+}
+
+.org-role {
+font-size: 10px;
+color: #4a7a4a;
+margin-top: 1px;
+}
+
+.badge {
+background: rgba(0,255,65,0.07);
+border: 1px solid rgba(0,255,65,0.15);
+padding: 8px 14px;
+border-radius: 3px;
+text-align: center;
+}
+
+.badge-num {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 28px;
+color: #00ff41;
+line-height: 1;
+text-shadow: 0 0 20px rgba(0,255,65,0.4);
+}
+
+.badge-label {
+font-size: 8px;
+color: #4a7a4a;
+letter-spacing: 0.15em;
+margin-top: 2px;
+}
+
+/* Scanline overlay */
+.scanlines {
+position: absolute;
+inset: 0;
+background: repeating-linear-gradient(
+0deg,
+transparent,
+transparent 2px,
+rgba(0,0,0,0.03) 2px,
+rgba(0,0,0,0.03) 4px
+);
+pointer-events: none;
+z-index: 2;
+}
+
+/* Corner accents */
+.corner {
+position: absolute;
+width: 16px;
+height: 16px;
+z-index: 3;
+}
+.corner.tl { top: 10px; left: 10px; border-top: 2px solid #00ff41; border-left: 2px solid #00ff41; }
+.corner.tr { top: 10px; right: 10px; border-top: 2px solid #00ff41; border-right: 2px solid #00ff41; }
+.corner.bl { bottom: 10px; left: 10px; border-bottom: 2px solid #00ff41; border-left: 2px solid #00ff41; }
+.corner.br { bottom: 10px; right: 10px; border-bottom: 2px solid #00ff41; border-right: 2px solid #00ff41; }
+</style>
+
+</head>
+<body>
+<div class="poster">
+  <div class="corner tl"></div>
+  <div class="corner tr"></div>
+  <div class="corner bl"></div>
+  <div class="corner br"></div>
+  <div class="scanlines"></div>
+
+  <div class="inner">
+    <div class="topbar">
+      <div class="terminal-tag">▶ cohort_v1.0 --init</div>
+      <div class="dots">
+        <div class="dot r"></div>
+        <div class="dot y"></div>
+        <div class="dot g"></div>
+      </div>
+    </div>
+
+```
+<div class="eyebrow">// PLACEMENT PREP · FIRST YEAR · SERIOUS ONLY</div>
+
+<div class="title">DSA<br/><span>COHORT</span></div>
+<div class="subtitle">PEER-LED · PLACEMENT FOCUSED · LIMITED SPOTS</div>
+
+<div class="divider"></div>
+
+<div class="section-label">// WHAT YOU GET</div>
+<div class="points">
+  <div class="point">
+    <div class="point-icon">▸</div>
+    <div class="point-text"><strong>Weekly Google Meet</strong> — solve 1–2 problems live together, peer discussion not lecture</div>
+  </div>
+  <div class="point">
+    <div class="point-icon">▸</div>
+    <div class="point-text"><strong>3 homework problems/week</strong> — curated by topic, submit your LeetCode link on WhatsApp</div>
+  </div>
+  <div class="point">
+    <div class="point-icon">▸</div>
+    <div class="point-text"><strong>WhatsApp group</strong> — doubts, discussion, accountability between sessions</div>
+  </div>
+  <div class="point">
+    <div class="point-icon">▸</div>
+    <div class="point-text"><strong>Homework review every week</strong> — what you solve this week gets discussed next meet</div>
+  </div>
+</div>
+
+<div class="schedule">
+  <div class="section-label" style="margin-bottom:10px;">// WEEKLY STRUCTURE</div>
+  <div class="schedule-row">
+    <span class="schedule-label">MEET DURATION</span>
+    <span class="schedule-value"><span class="highlight">1 hour</span> · Google Meet</span>
+  </div>
+  <div class="schedule-row">
+    <span class="schedule-label">LIVE PROBLEMS</span>
+    <span class="schedule-value">1–2 together on call</span>
+  </div>
+  <div class="schedule-row">
+    <span class="schedule-label">HOMEWORK</span>
+    <span class="schedule-value">3 problems · LeetCode links</span>
+  </div>
+  <div class="schedule-row">
+    <span class="schedule-label">PLATFORM</span>
+    <span class="schedule-value">WhatsApp + LeetCode</span>
+  </div>
+  <div class="schedule-row">
+    <span class="schedule-label">GOAL</span>
+    <span class="schedule-value"><span class="highlight">Placement Readiness</span></span>
+  </div>
+</div>
+
+<div class="warning">
+  <div class="warning-text">⚠ Not for casual learners. Missing sessions without notice = removed.<br/>First week is a trial — show up or step aside.</div>
+</div>
+
+<div class="cta">
+  <div class="cta-left">
+    <div class="cta-label">TO JOIN · FILL THE FORM</div>
+    <div class="cta-text">APPLY FOR A SPOT →</div>
+  </div>
+  <div class="cta-arrow">[ LINK ]</div>
+</div>
+
+<div class="footer">
+  <div class="organizer">
+    <div class="org-label">// ORGANIZED BY</div>
+    <div class="org-name">Chirag Goyal</div>
+    <div class="org-role">peer · first year · building something serious</div>
+  </div>
+  <div class="badge">
+    <div class="badge-num">W1</div>
+    <div class="badge-label">TRIAL WEEK</div>
+  </div>
+</div>
+```
+
+  </div>
+</div>
+</body>
+</html>
